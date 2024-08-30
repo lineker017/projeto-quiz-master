@@ -1,50 +1,92 @@
 import { useState } from "react"
 import "./style.css"
+import { Question } from "../../components/Question"
+
+// import { Questions } from "../../components/question"
+
+const questionsCss = [
+  {
+    id: 1, title: "Qual regra altera a cor de um elemento:", options: [
+      "color",
+      "background-color",
+      "font-size",
+      "transition"
+    ]
+  },
+  {
+    id: 2, title: "A posição que deixa um elemento fixo é a:", options: [
+      "static",
+      "absolute",
+      "fixed",
+      "relative"
+    ]
+  },
+  {
+    id: 3, title: "Para aumentar a fonte de um elemento usamos o:", options: [
+      "font",
+      "text-transform",
+      "font-size",
+      "hover"
+    ]
+  }
+]
 
 export default function Home() {
-  const [showTechs, setShowTechs] = useState(false)
+  const [frame, setFrame] = useState(-500)
+
+  const prevFrame = () => setFrame((prevState) => prevState - 100)
+  const nextFrame = () => setFrame((prevState) => prevState + 100)
 
   return (
-    <main>
-      <div className={`techs ${showTechs && 'top-0'}`}>
-        <header>
-          <h1 className="title">QUIZ DE PROGRAMAÇÃO</h1>
-          <h2 className="sub-title">Escolha uma categoria</h2>
+    <>
+      <main style={{ transform: `translateY(${frame}%)` }}>
+        <Question />
+        <Question />
+        <Question />
+        <Question />
 
-          <button onClick={() => setShowTechs(false)}>Voltar</button>
-        </header>
+        <div className='techs'>
+          <header>
+            <h1 className="title">QUIZ DE PROGRAMAÇÃO</h1>
+            <h2 className="sub-title">Escolha uma categoria</h2>
+          </header>
 
-        <div className="content-start">
-          <p>Clique no botão abaixo para começar</p>
+          <div className="content-start">
+            <p>Clique no botão abaixo para começar</p>
 
-          <div className="menu-button">
-            <button>HTML</button>
+            <div className="menu-button">
+              <button>HTML</button>
 
-            <button>CSS</button>
+              <button onClick={nextFrame}>
+                CSS
+              </button>
 
-            <button className="last-button">JavaScript</button>
+              <button className="last-button">JavaScript</button>
+            </div>
+
+            <img src="../../src/assets/imgs/category.svg" alt="" />
           </div>
-
-          <img src="../../src/assets/imgs/category.svg" alt="" />
         </div>
-      </div>
 
-      <div className="content">
-        <header>
-          <h1 className="title">QUIZ DE PROGRAMAÇÃO</h1>
-          <h2 className="sub-title">Seja bem-vindo</h2>
-        </header>
+        <div className="content">
+          <header>
+            <h1 className="title">QUIZ DE PROGRAMAÇÃO</h1>
+            <h2 className="sub-title">Seja bem-vindo</h2>
+          </header>
 
-        <div className="content-start">
-          <p>Clique no botão abaixo para começar</p>
+          <div className="content-start">
+            <p>Clique no botão abaixo para começar</p>
 
-          <button onClick={() => setShowTechs(true)}>
-            Iniciar
-          </button>
+            <button onClick={nextFrame}>
+              Iniciar
+            </button>
 
-          <img src="../../src/assets/imgs/quiz.svg" alt="img do main" />
+            <img src="../../src/assets/imgs/quiz.svg" alt="img do main" />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+
+      <button className="back" onClick={prevFrame}>Voltar</button>
+    </>
   )
 }
