@@ -2,37 +2,45 @@ import { useState } from "react"
 import "./style.css"
 import { Question } from "../../components/Question"
 
-// import { Questions } from "../../components/question"
-
 const questionsCss = [
   {
-    id: 1, title: "Qual regra altera a cor de um elemento:", options: [
+    id: 1, 
+    title: "Qual regra altera a cor de um elemento:", 
+    options: [
       "color",
       "background-color",
       "font-size",
       "transition"
-    ]
+    ],
+    alternativeCorrect: "color",
   },
   {
-    id: 2, title: "A posição que deixa um elemento fixo é a:", options: [
+    id: 2, 
+    title: "A posição que deixa um elemento fixo é a:", 
+    options: [
       "static",
       "absolute",
       "fixed",
       "relative"
-    ]
+    ],
+    alternativeCorrect: "fixed",
   },
   {
-    id: 3, title: "Para aumentar a fonte de um elemento usamos o:", options: [
+    id: 3, 
+    title: "Para aumentar a fonte de um elemento usamos o:", 
+    options: [
       "font",
       "text-transform",
       "font-size",
       "hover"
-    ]
+    ],
+    alternativeCorrect: "font-size"
   }
 ]
 
 export default function Home() {
-  const [frame, setFrame] = useState(-500)
+  const [frame, setFrame] = useState(-100 + (questionsCss.length * -100))
+  const [responses, setResponses] = useState([])
 
   const prevFrame = () => setFrame((prevState) => prevState - 100)
   const nextFrame = () => setFrame((prevState) => prevState + 100)
@@ -40,10 +48,23 @@ export default function Home() {
   return (
     <>
       <main style={{ transform: `translateY(${frame}%)` }}>
-        <Question />
-        <Question />
-        <Question />
-        <Question />
+
+        {questionsCss.sort((a, b) => {
+          return b.id - a.id
+        }).map((question) => {
+          return (
+            <Question
+              key={question.id}
+              id={question.id}
+              title={question.title}
+              options={question.options}
+              alternativeCorrect={question.alternativeCorrect}
+              total={questionsCss.length}
+              frame={frame}
+              nextFrame={nextFrame}
+            />
+          )
+        })}
 
         <div className='techs'>
           <header>
@@ -86,7 +107,9 @@ export default function Home() {
         </div>
       </main>
 
-      <button className="back" onClick={prevFrame}>Voltar</button>
+      {
+        frame !== -100 + (questionsCss.length * -100) && <button className="back" onClick={prevFrame}>Voltar</button>
+      }
     </>
   )
 }
