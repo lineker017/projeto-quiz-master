@@ -105,6 +105,10 @@ export default function Home() {
             <img src="../../src/assets/imgs/quiz.svg" alt="img do main" />
           </div>
         </div>
+
+        <div className="resut">
+          <h1>Voce acertou {}</h1>
+        </div>
       </main>
 
       {
